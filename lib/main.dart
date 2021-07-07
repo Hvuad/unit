@@ -1,4 +1,4 @@
-import 'dart:ffi';
+import 'sidebar.dart';
 
 import 'package:flutter/material.dart';
 
@@ -83,8 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
     unit_.text = "";
     kg_unit.text = "";
     unit_kg.text = "";
-    // FocusScope.of(context).unfocus();
-    focusNode.requestFocus();
+    FocusScope.of(context).unfocus();
+    // focusNode.requestFocus();
   }
 
   @override
@@ -95,57 +95,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Start",
-                  style: TextStyle(
-                    fontSize: 40,
-                    foreground: Paint()
-                      ..style = PaintingStyle.stroke
-                      ..strokeWidth = 1.5
-                      ..color = Colors.green[700]!,
-                  )),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  child: TextField(
-                    focusNode: focusNode,
-                    decoration: InputDecoration(
-                        hintText: "Ex : KG", labelText: 'Ex : KG'),
-                    keyboardType: TextInputType.number,
-                    controller: kg,
-                    onChanged: (text) {
-                      _calUnit();
-                    },
-                    textInputAction: TextInputAction.next,
-                    onEditingComplete: () => node.nextFocus(),
-                  ),
-                ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                Flexible(
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: "Ex : Unit", labelText: 'Ex : Unit'),
-                    keyboardType: TextInputType.number,
-                    controller: unit,
-                    onChanged: (text) {
-                      _calUnit();
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: Text("Result",
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text("Start",
                     style: TextStyle(
                       fontSize: 40,
                       foreground: Paint()
@@ -154,103 +109,146 @@ class _MyHomePageState extends State<MyHomePage> {
                         ..color = Colors.green[700]!,
                     )),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  child: Focus(
-                    onFocusChange: (focus) => {
-                      if (focus)
-                        kg_.text = ""
-                      else if (kg_.text == '')
-                        kg_.text = "1"
-                    },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                    child: TextField(
+                      focusNode: focusNode,
+                      decoration: InputDecoration(
+                          hintText: "Ex : KG", labelText: 'Ex : KG'),
+                      keyboardType: TextInputType.number,
+                      controller: kg,
+                      onChanged: (text) {
+                        _calUnit();
+                      },
+                      textInputAction: TextInputAction.next,
+                      onEditingComplete: () => node.nextFocus(),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Flexible(
                     child: TextField(
                       decoration: InputDecoration(
-                          hintText: "New Ex : KG", labelText: 'New Ex : KG'),
+                          hintText: "Ex : Unit", labelText: 'Ex : Unit'),
                       keyboardType: TextInputType.number,
-                      controller: kg_,
+                      controller: unit,
                       onChanged: (text) {
-                        _new_calUnit();
+                        _calUnit();
                       },
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                Flexible(
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: "KG to Unit", labelText: 'KG to Unit'),
-                    keyboardType: TextInputType.number,
-                    controller: kg_unit,
-                    readOnly: true,
-                    enableInteractiveSelection: false,
-                    focusNode: FocusNode(),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  child: Focus(
-                    onFocusChange: (focus) => {
-                      if (focus)
-                        unit_.text = ""
-                      else if (unit_.text == '')
-                        unit_.text = "1"
-                    },
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: "New Ex : Unit",
-                          labelText: 'New Ex : Unit'),
-                      keyboardType: TextInputType.number,
-                      controller: unit_,
-                      onChanged: (text) {
-                        _new_calUnit();
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                Flexible(
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: "Unit to KG", labelText: 'Unit to KG'),
-                    keyboardType: TextInputType.number,
-                    controller: unit_kg,
-                    readOnly: true,
-                    enableInteractiveSelection: false,
-                    focusNode: FocusNode(),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Center(
-                child: RaisedButton(
-                  color: Colors.red, // background
-                  textColor: Colors.white, // foreground
-                  onPressed: () {
-                    _clear();
-                  },
-                  child: Text('Clear'),
+                ],
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 30),
+                  child: Text("Result",
+                      style: TextStyle(
+                        fontSize: 40,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1.5
+                          ..color = Colors.green[700]!,
+                      )),
                 ),
               ),
-            )
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                    child: Focus(
+                      onFocusChange: (focus) => {if (focus) kg_.text = ""},
+                      child: TextField(
+                        decoration: InputDecoration(
+                            hintText: "New Ex : KG", labelText: 'New Ex : KG'),
+                        keyboardType: TextInputType.number,
+                        controller: kg_,
+                        onChanged: (text) {
+                          _new_calUnit();
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Flexible(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: "KG to Unit", labelText: 'KG to Unit'),
+                      keyboardType: TextInputType.number,
+                      controller: kg_unit,
+                      readOnly: true,
+                      enableInteractiveSelection: false,
+                      focusNode: FocusNode(),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                    child: Focus(
+                      onFocusChange: (focus) => {
+                        if (focus)
+                          unit_.text = ""
+                        else if (unit_.text == '')
+                          unit_.text = "1"
+                      },
+                      child: TextField(
+                        decoration: InputDecoration(
+                            hintText: "New Ex : Unit",
+                            labelText: 'New Ex : Unit'),
+                        keyboardType: TextInputType.number,
+                        controller: unit_,
+                        onChanged: (text) {
+                          _new_calUnit();
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Flexible(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: "Unit to KG", labelText: 'Unit to KG'),
+                      keyboardType: TextInputType.number,
+                      controller: unit_kg,
+                      readOnly: true,
+                      enableInteractiveSelection: false,
+                      focusNode: FocusNode(),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Center(
+                  child: RaisedButton(
+                    color: Colors.red, // background
+                    textColor: Colors.white, // foreground
+                    onPressed: () {
+                      _clear();
+                    },
+                    child: Text('Clear'),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
+      drawer: Sidebar(),
     );
   }
 }
